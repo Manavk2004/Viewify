@@ -18,6 +18,9 @@ import { LogIn } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { email, z } from "zod"
+import { router } from "better-auth/api";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 
 
@@ -29,6 +32,8 @@ export const emailPasswordSchema = z.object({
     .string()
     .min(8, "Password must be at least 8 characters")
     .max(64, "Password must be at most 64 characters"),
+  firstName: z.string(),
+  lastName: z.string(),
 });
 
 type LoginForm = z.infer<typeof emailPasswordSchema>
@@ -65,13 +70,17 @@ export default function AuthPage() {
   const [pending, setPending] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
+  const router = useRouter()
+
 
 
   const form = useForm<LoginForm>({
     resolver: zodResolver(emailPasswordSchema),
     defaultValues: {
         email: "",
-        password: ""
+        password: "",
+        firstName: "",
+        lastName: "",
     }
   })
 
@@ -97,11 +106,18 @@ export default function AuthPage() {
     setError(null);
     try {
       if (mode === "login") {
-        // @ts-expect-error better-auth client method is runtime-provided
         await authClient.signIn.email({ email: values.email, password: values.password, callbackURL: "/homepage" });
       } else {
-        // @ts-expect-error better-auth client method is runtime-provided
-        await authClient.signUp.email({ email: values.email, password: values.password });
+        console.log(values)
+        await authClient.signUp.email({ 
+          name: values.firstName,  
+          email: values.email, 
+          password: values.password, 
+          callbackURL: "/homepage" 
+        }, { 
+          onSuccess: () => { router.push("/homepage")}, 
+          onError: (err) => console.log("err", err)
+        });
       }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Authentication failed");
@@ -176,6 +192,35 @@ export default function AuthPage() {
 
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onEmailPassword)} className="space-y-3">
+
+                {mode === "signup" && (
+
+                  <div className="space-y-2 flex gap-3">
+                    <div className="flex flex-col gap-2">
+                      <label className="text-sm font-medium text-zinc-200">
+                        First Name
+                      </label>
+                      <Input
+                        {...form.register("firstName")}
+                        placeholder="Manav"
+                        className="border-white/10 bg-white/5 text-zinc-100 placeholder:text-zinc-500"
+                        required
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="text-sm font-medium text-zinc-200">
+                        Last Name
+                      </label>
+                      <Input
+                        {...form.register("lastName")}
+                        placeholder="Kamdar"
+                        className="border-white/10 bg-white/5 text-zinc-100 placeholder:text-zinc-500"
+                        required
+                        />
+                    </div>
+                  </div>
+                )}
+
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-zinc-200">
                     Email
