@@ -1,5 +1,5 @@
-import Homepage from "./screens/homepage/homepage";
+import AuthPage from "./screens/auth/AuthPage";
 
 export default function Page() {
-  return <Homepage />;
+  return <AuthPage />;
 }

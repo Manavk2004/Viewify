@@ -1,4 +1,4 @@
-import 'server-only'; // <-- ensure this file cannot be imported from the client
+import 'server-only' // <-- ensure this file cannot be imported from the client
 import { createTRPCOptionsProxy, TRPCQueryOptions } from '@trpc/tanstack-react-query';
 import { cache } from 'react';
 import { createTRPCClient } from '@trpc/client';
@@ -23,7 +23,6 @@ export function HydrateClient(props: { children: React.ReactNode }) {
     </HydrationBoundary>
   );
 }
-
 
 export function prefetch<T extends ReturnType<TRPCQueryOptions<any>>>(
   queryOptions: T,

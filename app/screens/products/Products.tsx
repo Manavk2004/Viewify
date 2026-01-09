@@ -64,6 +64,9 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import SideBar from "@/components/sidebar"
 import { listProducts } from "@/app/lib/productsPrisma/prisma"
+import { workflowsRouter } from "@/trpc/products/routers"
+import { trpc } from "@/trpc/server"
+import { useTRPC } from "@/trpc/client"
 
 type ProductStatus = "Active" | "Draft" | "Archived"
 
@@ -188,6 +191,8 @@ export default function Products() {
   const [images, setImages] = React.useState<ProductImage[]>([])
   const [rows, setRows] = React.useState<ProductRow[]>(DEMO_PRODUCTS)
 
+  const trpc = useTRPC()
+
   const form = useForm<CreateProductValues>({
     resolver: zodResolver(createProductSchema),
     defaultValues: {
@@ -281,10 +286,10 @@ export default function Products() {
   const hasNoResults = !hasNoProducts && products.length === 0
 
 
-  const displayProducts = () => {
-    const products = listProducts()
-    console.log(products)
+  const getProducts = () => {
+    const theString = trpc.products.getMany()
   }
+
 
 
   return (
@@ -675,7 +680,7 @@ export default function Products() {
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" onClick={displayProducts}>Sort</Button>
+                  <Button variant="outline" onClick={getProducts}>Sort</Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>Sort by</DropdownMenuLabel>
