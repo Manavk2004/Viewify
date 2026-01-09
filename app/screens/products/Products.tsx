@@ -63,6 +63,7 @@ import {
 } from "@/components/ui/table"
 import { Textarea } from "@/components/ui/textarea"
 import SideBar from "@/components/sidebar"
+import { listProducts } from "@/app/lib/productsPrisma/prisma"
 
 type ProductStatus = "Active" | "Draft" | "Archived"
 
@@ -278,6 +279,12 @@ export default function Products() {
 
   const hasNoProducts = rows.length === 0
   const hasNoResults = !hasNoProducts && products.length === 0
+
+
+  const displayProducts = () => {
+    const products = listProducts()
+    console.log(products)
+  }
 
 
   return (
@@ -668,7 +675,7 @@ export default function Products() {
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">Sort</Button>
+                  <Button variant="outline" onClick={displayProducts}>Sort</Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>Sort by</DropdownMenuLabel>
@@ -719,7 +726,7 @@ export default function Products() {
                       <TableHead>SKU</TableHead>
                       <TableHead className="text-right">Inventory</TableHead>
                       <TableHead className="text-right">Price</TableHead>
-                      <TableHead className="text-right">Updated</TableHead>
+                      <TableHead className="text-right">Created</TableHead>
                       <TableHead className="w-0" />
                     </TableRow>
                   </TableHeader>
