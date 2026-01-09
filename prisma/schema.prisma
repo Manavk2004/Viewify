@@ -22,3 +22,23 @@ model Post {
   authorId  Int
   author    User    @relation(fields: [authorId], references: [id])
 }
+
+enum theStatus {
+  Active
+  Draft
+}
+
+model Products {
+  id             Int       @id
+  title          String
+  description    String
+  status         theStatus
+  price          String
+  compareAtPrice Int
+  Sku            String?
+  trackInventory Boolean
+  Inventory      String
+  Category       String
+  Tags           String?
+  createdAt      DateTime  @default(now())
+}
