@@ -113,9 +113,13 @@ export default function AuthPage() {
           name: values.firstName,  
           email: values.email, 
           password: values.password, 
-          callbackURL: "/homepage" 
+          callbackURL: "/" 
         }, { 
-          onSuccess: () => { router.push("/homepage")}, 
+          onSuccess: async () => { 
+            const { data, error } = await authClient.getSession()
+            const userId = data?.user?.id
+            router.push(`/homepage/${userId}`)
+          }, 
           onError: (err) => console.log("err", err)
         });
       }
