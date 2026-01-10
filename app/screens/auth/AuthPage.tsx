@@ -151,16 +151,16 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0b0f14] text-zinc-100">
+    <div className="min-h-screen bg-background text-foreground">
       <div className="mx-auto grid min-h-screen max-w-[1400px] grid-cols-1 lg:grid-cols-2">
         {/* Left brand / marketing */}
-        <div className="relative hidden overflow-hidden border-r border-white/10 bg-[#0f141b] p-10 lg:block">
+        <div className="relative hidden overflow-hidden border-r border-border bg-card p-10 lg:block">
           <div className="flex items-center gap-3">
-            <div className="grid h-10 w-10 place-items-center rounded-xl bg-white/10 text-white">
+            <div className="grid h-10 w-10 place-items-center rounded-xl bg-muted text-foreground">
               <span className="text-sm font-semibold">V</span>
             </div>
             <div>
-              <p className="text-xs font-medium text-zinc-400">Welcome to</p>
+              <p className="text-xs font-medium text-muted-foreground">Welcome to</p>
               <h1 className="text-xl font-semibold tracking-tight">Viewify</h1>
             </div>
           </div>
@@ -169,7 +169,7 @@ export default function AuthPage() {
             <h2 className="text-3xl font-semibold tracking-tight">
               Analytics that look as good as they perform.
             </h2>
-            <p className="mt-3 text-sm leading-6 text-zinc-300">
+            <p className="mt-3 text-sm leading-6 text-muted-foreground">
               Sign in to manage products, track orders, and monitor KPIs in a
               single dashboard.
             </p>
@@ -183,7 +183,7 @@ export default function AuthPage() {
 
         {/* Right auth card */}
         <div className="flex items-center justify-center p-6">
-          <Card className="w-full max-w-md border-white/10 bg-white/5">
+          <Card className="w-full max-w-md border-border bg-card">
             <CardHeader>
               <CardTitle className="text-xl">
                 {mode === "login" ? "Sign in" : "Create your account"}
@@ -199,7 +199,7 @@ export default function AuthPage() {
               <Button
                 type="button"
                 variant="outline"
-                className="w-full border-white/10 bg-white/5 hover:bg-white/10"
+                className="w-full border-border bg-muted/40 hover:bg-muted/60"
                 onClick={onGoogle}
                 disabled={pending}
               >
@@ -208,8 +208,8 @@ export default function AuthPage() {
               </Button>
 
               <div className="relative">
-                <Separator className="bg-white/10" />
-                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md bg-[#0b0f14] px-2 text-xs text-zinc-400">
+                <Separator className="bg-border" />
+                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md bg-background px-2 text-xs text-muted-foreground">
                   or
                 </span>
               </div>
@@ -221,24 +221,24 @@ export default function AuthPage() {
 
                   <div className="space-y-2 flex gap-3">
                     <div className="flex flex-col gap-2">
-                      <label className="text-sm font-medium text-zinc-200">
+                      <label className="text-sm font-medium text-foreground">
                         First Name
                       </label>
                       <Input
                         {...form.register("firstName")}
                         placeholder="Manav"
-                        className="border-white/10 bg-white/5 text-zinc-100 placeholder:text-zinc-500"
+                        className="border-border bg-background text-foreground placeholder:text-muted-foreground"
                         required
                       />
                     </div>
                     <div className="flex flex-col gap-2">
-                      <label className="text-sm font-medium text-zinc-200">
+                      <label className="text-sm font-medium text-foreground">
                         Last Name
                       </label>
                       <Input
                         {...form.register("lastName")}
                         placeholder="Kamdar"
-                        className="border-white/10 bg-white/5 text-zinc-100 placeholder:text-zinc-500"
+                        className="border-border bg-background text-foreground placeholder:text-muted-foreground"
                         required
                         />
                     </div>
@@ -246,7 +246,7 @@ export default function AuthPage() {
                 )}
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-zinc-200">
+                  <label className="text-sm font-medium text-foreground">
                     Email
                   </label>
                   <Input
@@ -254,13 +254,13 @@ export default function AuthPage() {
                     type="email"
                     placeholder="you@company.com"
                     autoComplete="email"
-                    className="border-white/10 bg-white/5 text-zinc-100 placeholder:text-zinc-500"
+                    className="border-border bg-background text-foreground placeholder:text-muted-foreground"
                     required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-zinc-200">
+                  <label className="text-sm font-medium text-foreground">
                     Password
                   </label>
                   <Input
@@ -270,13 +270,13 @@ export default function AuthPage() {
                     autoComplete={
                       mode === "login" ? "current-password" : "new-password"
                     }
-                    className="border-white/10 bg-white/5 text-zinc-100 placeholder:text-zinc-500"
+                    className="border-border bg-background text-foreground placeholder:text-muted-foreground"
                     required
                   />
                 </div>
 
                 {error ? (
-                  <p className="rounded-md border border-rose-900 bg-rose-950/30 px-3 py-2 text-sm text-rose-200">
+                  <p className="rounded-md border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive">
                     {error}
                   </p>
                 ) : null}
@@ -293,11 +293,11 @@ export default function AuthPage() {
             </CardContent>
 
             <CardFooter className="flex flex-col gap-2">
-              <div className="text-sm text-zinc-300">
+              <div className="text-sm text-muted-foreground">
                 {mode === "login" ? (
                   <button
                     type="button"
-                    className="text-sm font-medium text-zinc-100 underline underline-offset-4"
+                    className="text-sm font-medium text-foreground underline underline-offset-4"
                     onClick={() => setMode("signup")}
                   >
                     Don’t have an account? Sign up
@@ -305,7 +305,7 @@ export default function AuthPage() {
                 ) : (
                   <button
                     type="button"
-                    className="text-sm font-medium text-zinc-100 underline underline-offset-4"
+                    className="text-sm font-medium text-foreground underline underline-offset-4"
                     onClick={() => setMode("login")}
                   >
                     Already have an account? Sign in
@@ -313,7 +313,7 @@ export default function AuthPage() {
                 )}
               </div>
 
-              <p className="text-xs text-zinc-500">
+              <p className="text-xs text-muted-foreground">
                 By continuing, you agree to our Terms and Privacy Policy.
               </p>
             </CardFooter>
