@@ -67,6 +67,8 @@ import { listProducts } from "@/app/lib/productsPrisma/prisma"
 import { workflowsRouter } from "@/trpc/products/routers"
 import { trpc } from "@/trpc/server"
 import { useTRPC } from "@/trpc/client"
+import { useParams } from "next/navigation"
+import { useQuery, useMutation } from "@tanstack/react-query"
 
 type ProductStatus = "Active" | "Draft" | "Archived"
 
@@ -193,6 +195,21 @@ export default function Products() {
 
   const trpc = useTRPC()
 
+  const params = useParams<{ id?: string }>()
+  const userId = params?.id
+
+  const productsQuery = useQuery(
+    trpc.products.getMany.queryOptions({ userId }),
+  )
+
+  const createProduct = useMutation(
+    trpc.products.create.mutationOptions({
+      onSuccess: async () => {
+        await productsQuery.refetch()
+      },
+    }),
+  )
+
   const form = useForm<CreateProductValues>({
     resolver: zodResolver(createProductSchema),
     defaultValues: {
@@ -246,43 +263,59 @@ export default function Products() {
     setImages([])
   }
 
-  function submitCreate(values: CreateProductValues) {
-    const image = images[0]?.previewUrl
-    const newRow: ProductRow = {
-      id: uuidv4(),
+  async function submitCreate(values: CreateProductValues) {
+    await createProduct.mutateAsync({
+      userId,
       title: values.title,
+      description: values.description ?? "",
       status: values.status,
-      sku: values.sku ? values.sku : "",
-      inventory: values.trackInventory ? Number(values.inventory): 0,
-      price: Number(values.price),
-      updatedAt: todayLabel(),
-      image,
-    }
-    console.log(newRow)
-    setRows((prev) => [newRow, ...prev])
+      price: values.price,
+      compareAtPrice: values.compareAtPrice,
+      sku: values.sku || undefined,
+      trackInventory: values.trackInventory,
+      inventory: values.inventory,
+      category: values.category,
+      tags: values.tags || undefined,
+    })
+
     setCreateOpen(false)
     resetCreate()
   }
 
   const products = React.useMemo(() => {
     const q = query.trim().toLowerCase()
-    if (!q) return rows
-    return rows.filter((p) =>
+    const sourceRows: ProductRow[] = (productsQuery.data ?? []).map((p) => ({
+      id: String(p.id),
+      title: p.title,
+      status: p.status as ProductStatus,
+      sku: p.Sku ?? "",
+      inventory: Number(p.Inventory),
+      price: Number(p.price),
+      updatedAt: new Date(p.createdAt).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }),
+      image: undefined,
+    }))
+
+    if (!q) return sourceRows
+    return sourceRows.filter((p) =>
       [p.title, p.sku, p.status].some((v) => v.toLowerCase().includes(q))
     )
-  }, [query, rows])
+  }, [query, productsQuery.data])
 
   const totals = React.useMemo(() => {
-    const total = rows.length
-    const active = rows.filter((p) => p.status === "Active").length
-    const draft = rows.filter((p) => p.status === "Draft").length
-    const lowStock = rows.filter(
+    const total = products.length
+    const active = products.filter((p) => p.status === "Active").length
+    const draft = products.filter((p) => p.status === "Draft").length
+    const lowStock = products.filter(
       (p) => p.status !== "Archived" && p.inventory > 0 && p.inventory <= 10
     ).length
     return { total, active, draft, lowStock }
-  }, [rows])
+  }, [products])
 
-  const hasNoProducts = rows.length === 0
+  const hasNoProducts = productsQuery.isPending ? false : products.length === 0
   const hasNoResults = !hasNoProducts && products.length === 0
 
 
