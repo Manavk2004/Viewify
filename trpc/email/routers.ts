@@ -1,7 +1,6 @@
 // server/api/routers/email.ts
 import { z } from "zod";
 import { baseProcedure, createTRPCRouter, } from "../init";
-import { Resend } from "resend";
 import Mailgun from "mailgun.js"
 import FormData from "form-data";
 

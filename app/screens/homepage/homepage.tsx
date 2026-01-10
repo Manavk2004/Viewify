@@ -179,7 +179,7 @@ export default function Homepage() {
                   className="w-full bg-transparent outline-none placeholder:text-muted-foreground"
                   placeholder="Search orders, products, customers…"
                   aria-label="Search"
-                  value={q}
+                  value={q as string}
                   onChange={(e) => setQ(e.target.value || null)}
                 />
                 <kbd className="hidden rounded-lg border border-border bg-muted px-2 py-1 text-xs text-muted-foreground sm:inline-block">

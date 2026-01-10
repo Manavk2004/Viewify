@@ -71,7 +71,6 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import SideBar from "@/components/sidebar"
 import { listProducts } from "@/app/lib/productsPrisma/prisma"
-import { workflowsRouter } from "@/trpc/products/routers"
 import { trpc } from "@/trpc/server"
 import { useTRPC } from "@/trpc/client"
 import { useParams } from "next/navigation"
@@ -327,7 +326,7 @@ export default function Products() {
 
 
   const getProducts = () => {
-    const theString = trpc.products.getMany()
+    return null
   }
 
 
