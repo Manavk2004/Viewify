@@ -1,6 +1,8 @@
 "use client"
 import SideBar from '@/components/sidebar';
 import { Search } from 'lucide-react';
+import { authClient } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation';
 
 type KPI = {
   label: string;
@@ -56,6 +58,14 @@ function StatusPill({ status }: { status: OrderRow["status"] }) {
 
 
 export default function Homepage() {
+
+  const router = useRouter()
+
+  async function onSignOut() {
+    await authClient.signOut()
+    // After sign-out, send the user back to the auth page
+    router.push("/")
+  }
 
 
 
@@ -177,6 +187,12 @@ export default function Homepage() {
                 </button>
                 <button className="rounded-xl bg-white px-3 py-2 text-sm font-semibold text-zinc-900 hover:bg-zinc-200">
                   Create
+                </button>
+                <button
+                  className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium hover:bg-white/10"
+                  onClick={onSignOut}
+                >
+                  Sign out
                 </button>
               </div>
             </div>
@@ -310,4 +326,3 @@ export default function Homepage() {
     </div>
   );
 }
-
