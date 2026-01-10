@@ -32,7 +32,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Empty } from "@/components/ui/empty"
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty"
 import { Input } from "@/components/ui/input"
 import {
   DropdownMenu,
@@ -730,30 +737,42 @@ export default function Products() {
           <CardContent>
             {hasNoProducts ? (
               <div className="py-10">
-                <Empty
-                  icon={Package}
-                  title="No products yet"
-                  description="Create your first product to start selling."
-                  action={
-                    <Button>
+                <Empty>
+                  <EmptyContent>
+                    <EmptyHeader>
+                      <EmptyMedia variant="icon">
+                        <Package className="size-5" />
+                      </EmptyMedia>
+                      <EmptyTitle>No products yet</EmptyTitle>
+                      <EmptyDescription>
+                        Create your first product to start selling.
+                      </EmptyDescription>
+                    </EmptyHeader>
+                    <Button onClick={() => setCreateOpen(true)}>
                       <Plus className="mr-2 size-4" />
                       Create product
                     </Button>
-                  }
-                />
+                  </EmptyContent>
+                </Empty>
               </div>
             ) : hasNoResults ? (
               <div className="py-10">
-                <Empty
-                  icon={Search}
-                  title="No matching products"
-                  description="Try a different keyword or clear your search."
-                  action={
+                <Empty>
+                  <EmptyContent>
+                    <EmptyHeader>
+                      <EmptyMedia variant="icon">
+                        <Search className="size-5" />
+                      </EmptyMedia>
+                      <EmptyTitle>No matching products</EmptyTitle>
+                      <EmptyDescription>
+                        Try a different keyword or clear your search.
+                      </EmptyDescription>
+                    </EmptyHeader>
                     <Button variant="outline" onClick={() => setQuery("")}>
                       Clear search
                     </Button>
-                  }
-                />
+                  </EmptyContent>
+                </Empty>
               </div>
             ) : (
               <div className="overflow-x-auto">
