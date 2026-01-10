@@ -56,16 +56,16 @@ export default function Page() {
   })
 
   return (
-    <div className="min-h-screen bg-[#0b0f14] text-zinc-100">
+    <div className="min-h-screen bg-background text-foreground">
       <div className="mx-auto flex min-h-screen w-full max-w-[1400px]">
         {/* Sidebar */}
-        <aside className="hidden w-72 shrink-0 border-r border-white/10 bg-[#0f141b] px-4 py-6 lg:block">
+        <aside className="hidden w-72 shrink-0 border-r border-border bg-card px-4 py-6 lg:block">
           <div className="flex items-center justify-between px-2">
             <div>
-              <p className="text-xs font-medium text-zinc-400">Dashboard</p>
+              <p className="text-xs font-medium text-muted-foreground">Dashboard</p>
               <h1 className="text-xl font-semibold tracking-tight">Viewify</h1>
             </div>
-            <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-xs font-medium text-zinc-200">
+            <span className="rounded-full border border-border bg-muted px-2 py-0.5 text-xs font-medium text-foreground">
               Beta
             </span>
           </div>
@@ -75,10 +75,10 @@ export default function Page() {
 
         {/* Main */}
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-10 border-b border-white/10 bg-[#0b0f14]/70 backdrop-blur">
+          <header className="sticky top-0 z-10 border-b border-border/80 bg-background/80 backdrop-blur">
             <div className="flex items-center gap-3 px-4 py-3 sm:px-6">
               <div>
-                <p className="text-xs font-medium text-zinc-400">Viewify • Settings</p>
+                <p className="text-xs font-medium text-muted-foreground">Viewify • Settings</p>
                 <p className="text-base font-semibold">Account & preferences</p>
               </div>
             </div>
@@ -86,25 +86,27 @@ export default function Page() {
 
           <main className="flex-1 px-4 py-6 sm:px-6">
             {/* Theme */}
-            <section className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm">
+            <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
               <h2 className="text-base font-semibold">Appearance</h2>
-              <p className="mt-1 text-sm text-zinc-300">Choose how Viewify looks for you.</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Choose how Viewify looks for you.
+              </p>
 
               <div className="mt-4 flex flex-wrap gap-2">
                 <button
-                  className={`rounded-xl border px-3 py-2 text-sm font-medium ${theme === "light" ? "border-white/20 bg-white/10" : "border-white/10 bg-white/5 hover:bg-white/10"}`}
+                  className={`rounded-xl border px-3 py-2 text-sm font-medium ${mounted && theme === "light" ? "border-border bg-muted" : "border-border bg-background hover:bg-muted/60"}`}
                   onClick={() => setTheme("light")}
                 >
                   Light
                 </button>
                 <button
-                  className={`rounded-xl border px-3 py-2 text-sm font-medium ${mounted && theme === "dark" ? "border-white/20 bg-white/10" : "border-white/10 bg-white/5 hover:bg-white/10"}`}
+                  className={`rounded-xl border px-3 py-2 text-sm font-medium ${mounted && theme === "dark" ? "border-border bg-muted" : "border-border bg-background hover:bg-muted/60"}`}
                   onClick={() => setTheme("dark")}
                 >
                   Dark
                 </button>
                 <button
-                  className={`rounded-xl border px-3 py-2 text-sm font-medium ${mounted && theme === "system" ? "border-white/20 bg-white/10" : "border-white/10 bg-white/5 hover:bg-white/10"}`}
+                  className={`rounded-xl border px-3 py-2 text-sm font-medium ${mounted && theme === "system" ? "border-border bg-muted" : "border-border bg-background hover:bg-muted/60"}`}
                   onClick={() => setTheme("system")}
                 >
                   System
@@ -113,23 +115,23 @@ export default function Page() {
             </section>
 
             {/* Profile */}
-            <section className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm">
+            <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-sm">
               <h2 className="text-base font-semibold">Profile</h2>
-              <p className="mt-1 text-sm text-zinc-300">Update your account details.</p>
+              <p className="mt-1 text-sm text-muted-foreground">Update your account details.</p>
 
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-zinc-200">Email</label>
+                  <label className="text-sm font-medium text-foreground">Email</label>
                   <input
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm outline-none"
+                    className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none"
                     value={meQuery.data?.email ?? ""}
                     disabled
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-zinc-200">Username</label>
+                  <label className="text-sm font-medium text-foreground">Username</label>
                   <input
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm outline-none"
+                    className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Your name"
@@ -139,7 +141,7 @@ export default function Page() {
 
               <div className="mt-4 flex justify-end">
                 <button
-                  className="rounded-xl bg-white px-3 py-2 text-sm font-semibold text-zinc-900 hover:bg-zinc-200 disabled:opacity-60"
+                  className="rounded-xl bg-foreground px-3 py-2 text-sm font-semibold text-background hover:bg-foreground/90 disabled:opacity-60"
                   disabled={updateName.isPending || !name.trim()}
                   onClick={() => updateName.mutate()}
                 >
@@ -149,25 +151,25 @@ export default function Page() {
             </section>
 
             {/* Security */}
-            <section className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm">
+            <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-sm">
               <h2 className="text-base font-semibold">Security</h2>
-              <p className="mt-1 text-sm text-zinc-300">Change your password.</p>
+              <p className="mt-1 text-sm text-muted-foreground">Change your password.</p>
 
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-zinc-200">Current password</label>
+                  <label className="text-sm font-medium text-foreground">Current password</label>
                   <input
                     type="password"
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm outline-none"
+                    className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none"
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-zinc-200">New password</label>
+                  <label className="text-sm font-medium text-foreground">New password</label>
                   <input
                     type="password"
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm outline-none"
+                    className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground outline-none"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                   />
@@ -176,7 +178,7 @@ export default function Page() {
 
               <div className="mt-4 flex justify-end">
                 <button
-                  className="rounded-xl bg-white px-3 py-2 text-sm font-semibold text-zinc-900 hover:bg-zinc-200 disabled:opacity-60"
+                  className="rounded-xl bg-foreground px-3 py-2 text-sm font-semibold text-background hover:bg-foreground/90 disabled:opacity-60"
                   disabled={
                     changePassword.isPending ||
                     currentPassword.length < 8 ||
@@ -190,18 +192,18 @@ export default function Page() {
             </section>
 
             {/* Danger zone */}
-            <section className="mt-6 rounded-2xl border border-rose-900/40 bg-rose-950/20 p-5 shadow-sm">
-              <h2 className="text-base font-semibold text-rose-200">Danger zone</h2>
-              <p className="mt-1 text-sm text-rose-200/80">
+            <section className="mt-6 rounded-2xl border border-destructive/40 bg-destructive/10 p-5 shadow-sm">
+              <h2 className="text-base font-semibold text-destructive">Danger zone</h2>
+              <p className="mt-1 text-sm text-destructive/80">
                 Deleting your account is permanent and will remove your sessions.
               </p>
 
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-rose-200">Confirm password</label>
+                  <label className="text-sm font-medium text-destructive">Confirm password</label>
                   <input
                     type="password"
-                    className="w-full rounded-lg border border-rose-900/60 bg-black/20 px-3 py-2 text-sm outline-none"
+                    className="w-full rounded-lg border border-destructive/50 bg-background px-3 py-2 text-sm text-foreground outline-none"
                     value={deletePassword}
                     onChange={(e) => setDeletePassword(e.target.value)}
                     placeholder="Enter your password"
@@ -211,7 +213,7 @@ export default function Page() {
 
               <div className="mt-4 flex justify-end">
                 <button
-                  className="rounded-xl bg-rose-600 px-3 py-2 text-sm font-semibold text-white hover:bg-rose-500 disabled:opacity-60"
+                  className="rounded-xl bg-destructive px-3 py-2 text-sm font-semibold text-destructive-foreground hover:bg-destructive/90 disabled:opacity-60"
                   disabled={deleteAccount.isPending || deletePassword.length < 8}
                   onClick={() => {
                     // simple confirm (we can swap to shadcn AlertDialog next)

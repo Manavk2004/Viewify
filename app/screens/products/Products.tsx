@@ -326,36 +326,37 @@ export default function Products() {
 
 
   return (
-    <div className="min-h-screen bg-background flex">
-        <aside className="hidden w-72 shrink-0 border-r border-white/10 bg-[#0f141b] px-4 py-6 lg:block">
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="mx-auto flex min-h-screen w-full max-w-[1400px]">
+        <aside className="hidden w-72 shrink-0 border-r border-border bg-card px-4 py-6 lg:block">
           <div className="flex items-center justify-between px-2">
             <div>
-              <p className="text-xs font-medium text-zinc-400">Dashboard</p>
+              <p className="text-xs font-medium text-muted-foreground">Dashboard</p>
               <h1 className="text-xl font-semibold tracking-tight">Viewify</h1>
             </div>
-            <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-xs font-medium text-zinc-200">
+            <span className="rounded-full border border-border bg-muted px-2 py-0.5 text-xs font-medium text-foreground">
               Beta
             </span>
           </div>
 
           <SideBar />
 
-          <div className="mt-8 rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-4">
+          <div className="mt-8 rounded-xl border border-border bg-gradient-to-br from-muted/40 to-transparent p-4">
             <p className="text-sm font-semibold">Quick actions</p>
-            <p className="mt-1 text-sm text-zinc-300">
+            <p className="mt-1 text-sm text-muted-foreground">
               Jump back in where you left off.
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
-              <button className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium hover:bg-white/10">
+              <button className="rounded-lg border border-border bg-muted/40 px-3 py-2 text-sm font-medium hover:bg-muted/60">
                 Create product
               </button>
-              <button className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium hover:bg-white/10">
+              <button className="rounded-lg border border-border bg-muted/40 px-3 py-2 text-sm font-medium hover:bg-muted/60">
                 Create discount
               </button>
             </div>
           </div>
         </aside>
-      <div className="mx-auto w-full max-w-[1400px] px-4 py-6 sm:px-6">
+        <div className="flex-1 px-4 py-6 sm:px-6">
         {/* Header */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -829,6 +830,7 @@ export default function Products() {
             )}
           </CardContent>
         </Card>
+      </div>
       </div>
     </div>
   )

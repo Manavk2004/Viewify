@@ -70,16 +70,16 @@ export default function Page() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0b0f14] text-zinc-100">
+    <div className="min-h-screen bg-background text-foreground">
       <div className="mx-auto flex min-h-screen w-full max-w-[1400px]">
         {/* Sidebar */}
-        <aside className="hidden w-72 shrink-0 border-r border-white/10 bg-[#0f141b] px-4 py-6 lg:block">
+        <aside className="hidden w-72 shrink-0 border-r border-border bg-card px-4 py-6 lg:block">
           <div className="flex items-center justify-between px-2">
             <div>
-              <p className="text-xs font-medium text-zinc-400">Dashboard</p>
+              <p className="text-xs font-medium text-muted-foreground">Dashboard</p>
               <h1 className="text-xl font-semibold tracking-tight">Viewify</h1>
             </div>
-            <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-xs font-medium text-zinc-200">
+            <span className="rounded-full border border-border bg-muted px-2 py-0.5 text-xs font-medium text-foreground">
               Beta
             </span>
           </div>
@@ -89,10 +89,10 @@ export default function Page() {
 
         {/* Main */}
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-10 border-b border-white/10 bg-[#0b0f14]/70 backdrop-blur">
+          <header className="sticky top-0 z-10 border-b border-border/80 bg-background/80 backdrop-blur">
             <div className="flex items-center gap-3 px-4 py-3 sm:px-6">
               <div>
-                <p className="text-xs font-medium text-zinc-400">Viewify • Analytics</p>
+                <p className="text-xs font-medium text-muted-foreground">Viewify • Analytics</p>
                 <p className="text-base font-semibold">Company performance</p>
               </div>
             </div>
@@ -104,22 +104,22 @@ export default function Page() {
               {kpis.map((kpi) => (
                 <div
                   key={kpi.label}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-sm"
+                  className="rounded-2xl border border-border bg-card p-4 shadow-sm"
                 >
-                  <p className="text-sm font-medium text-zinc-300">{kpi.label}</p>
+                  <p className="text-sm font-medium text-muted-foreground">{kpi.label}</p>
                   <p className="mt-1 text-2xl font-semibold tracking-tight">{kpi.value}</p>
-                  <p className="mt-2 text-sm text-zinc-400">{kpi.sub}</p>
+                  <p className="mt-2 text-sm text-muted-foreground">{kpi.sub}</p>
                 </div>
               ))}
             </section>
 
             {/* Charts */}
             <section className="mt-6 grid gap-4 lg:grid-cols-2">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm">
+              <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
                 <div className="flex items-center justify-between gap-3">
                   <div>
                     <h2 className="text-base font-semibold">Revenue over time</h2>
-                    <p className="mt-1 text-sm text-zinc-300">Last 6 months (dummy data)</p>
+                    <p className="mt-1 text-sm text-muted-foreground">Last 6 months (dummy data)</p>
                   </div>
                 </div>
 
@@ -132,15 +132,15 @@ export default function Page() {
                           <stop offset="100%" stopColor="#6366f1" stopOpacity={0.05} />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid stroke="#27272a" strokeDasharray="4 4" />
-                      <XAxis dataKey="month" stroke="#a1a1aa" />
+                      <CartesianGrid stroke="var(--border)" strokeDasharray="4 4" />
+                      <XAxis dataKey="month" stroke="var(--muted-foreground)" />
                       <YAxis
-                        stroke="#a1a1aa"
+                        stroke="var(--muted-foreground)"
                         tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
                       />
                       <Tooltip
-                        contentStyle={{ background: "#0b0f14", border: "1px solid rgba(255,255,255,0.1)" }}
-                        labelStyle={{ color: "#e4e4e7" }}
+                        contentStyle={{ background: "var(--background)", border: "1px solid var(--border)", color: "var(--foreground)" }}
+                        labelStyle={{ color: "var(--foreground)" }}
                         formatter={(value) => [formatUsd(Number(value)), "Revenue"]}
                       />
                       <Area
@@ -155,21 +155,21 @@ export default function Page() {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm">
+              <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
                 <div>
                   <h2 className="text-base font-semibold">Product sales over time</h2>
-                  <p className="mt-1 text-sm text-zinc-300">Units sold by category (dummy data)</p>
+                  <p className="mt-1 text-sm text-muted-foreground">Units sold by category (dummy data)</p>
                 </div>
 
                 <div className="mt-4 h-64">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={productSales} margin={{ top: 10, right: 10, bottom: 0, left: 0 }}>
-                      <CartesianGrid stroke="#27272a" strokeDasharray="4 4" />
-                      <XAxis dataKey="month" stroke="#a1a1aa" />
-                      <YAxis stroke="#a1a1aa" />
+                      <CartesianGrid stroke="var(--border)" strokeDasharray="4 4" />
+                      <XAxis dataKey="month" stroke="var(--muted-foreground)" />
+                      <YAxis stroke="var(--muted-foreground)" />
                       <Tooltip
-                        contentStyle={{ background: "#0b0f14", border: "1px solid rgba(255,255,255,0.1)" }}
-                        labelStyle={{ color: "#e4e4e7" }}
+                        contentStyle={{ background: "var(--background)", border: "1px solid var(--border)", color: "var(--foreground)" }}
+                        labelStyle={{ color: "var(--foreground)" }}
                       />
                       <Bar dataKey="hoodies" stackId="a" fill="#34d399" />
                       <Bar dataKey="tees" stackId="a" fill="#60a5fa" />
@@ -178,14 +178,14 @@ export default function Page() {
                   </ResponsiveContainer>
                 </div>
 
-                <div className="mt-3 flex flex-wrap gap-2 text-xs text-zinc-300">
-                  <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2 py-1">
+                <div className="mt-3 flex flex-wrap gap-2 text-xs text-muted-foreground">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/40 px-2 py-1">
                     <span className="h-2 w-2 rounded-full bg-emerald-400" /> Hoodies
                   </span>
-                  <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2 py-1">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/40 px-2 py-1">
                     <span className="h-2 w-2 rounded-full bg-blue-400" /> Tees
                   </span>
-                  <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-2 py-1">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/40 px-2 py-1">
                     <span className="h-2 w-2 rounded-full bg-amber-400" /> Accessories
                   </span>
                 </div>
@@ -222,14 +222,14 @@ export default function Page() {
               ].map((card) => (
                 <div
                   key={card.title}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm"
+                  className="rounded-2xl border border-border bg-card p-5 shadow-sm"
                 >
                   <h3 className="text-base font-semibold">{card.title}</h3>
                   <div className="mt-4 space-y-3">
                     {card.rows.map((r) => (
                       <div key={r.label} className="flex items-center justify-between">
-                        <p className="text-sm text-zinc-300">{r.label}</p>
-                        <p className="text-sm font-semibold text-zinc-100">{r.value}</p>
+                        <p className="text-sm text-muted-foreground">{r.label}</p>
+                        <p className="text-sm font-semibold text-foreground">{r.value}</p>
                       </div>
                     ))}
                   </div>

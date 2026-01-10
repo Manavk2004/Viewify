@@ -52,23 +52,26 @@ function NavItem({
 }) {
 
   const router = useRouter()
+  console.log("Current active",)
+  const params = useParams()
+  
 
   return (
     <button
-      onClick={() => router.push(route)}
+      onClick={() => {router.push(route); active=true}}
       className={
         "group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors w-full " +
         (active
-          ? "bg-white/10 text-white"
-          : "text-zinc-300 hover:bg-white/5 hover:text-white")
+          ? "bg-muted/70 text-foreground"
+          : "text-muted-foreground hover:bg-muted/60 hover:text-foreground")
       }
     >
       <span
         className={
           "grid h-9 w-9 place-items-center rounded-md border " +
           (active
-            ? "border-white/10 bg-white/10 text-white"
-            : "border-white/10 bg-zinc-950 text-zinc-200 group-hover:bg-white/5")
+            ? "border-border bg-muted/70 text-foreground"
+            : "border-border bg-background text-muted-foreground group-hover:bg-muted/60")
         }
       >
         <Icon name={icon} />
