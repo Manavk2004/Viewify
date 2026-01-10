@@ -138,7 +138,7 @@ export default function AuthPage() {
               to: "mjkamdar04@gmail.com",
               firstName: "Manav"
             })
-            router.push(`/homepage/${userId}`)
+            router.push(`/overview/${userId}`)
           }, 
           onError: (err) => console.log("err", err)
         });
