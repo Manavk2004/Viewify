@@ -83,9 +83,9 @@ function NavItem({
 const SideBar = () => {
   return (
     <nav className="mt-6 space-y-1 border-white border-1 flex-4/12">
-        <NavItem icon="home" label="Overview" active route="/"/>
+        <NavItem icon="home" label="Overview" active route="/homepage"/>
         <NavItem icon="orders" label="Orders" route='/orders' />
-        <NavItem icon="products" label="Products" route='products'/>
+        <NavItem icon="products" label="Products" route='/products'/>
         <NavItem icon="analytics" label="Analytics" route='analytics'/>
         <NavItem icon="settings" label="Settings" route='settings' />
     </nav>

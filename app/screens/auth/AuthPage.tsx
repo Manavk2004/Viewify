@@ -106,7 +106,23 @@ export default function AuthPage() {
     setError(null);
     try {
       if (mode === "login") {
-        await authClient.signIn.email({ email: values.email, password: values.password, callbackURL: "/homepage" });
+        const { data, error } = await authClient.signIn.email({
+          email: values.email,
+          password: values.password,
+        });
+
+        if (error) {
+          setError(error.message ?? "Invalid email or password");
+          return;
+        }
+
+        const userId = data?.user?.id;
+        if (!userId) {
+          setError("Could not determine user after sign in");
+          return;
+        }
+
+        router.push(`/homepage/${userId}`)
       } else {
         console.log(values)
         await authClient.signUp.email({ 
@@ -307,4 +323,3 @@ export default function AuthPage() {
     </div>
   );
 }
-
