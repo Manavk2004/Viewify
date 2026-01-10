@@ -90,8 +90,8 @@ const SideBar = () => {
   const withId = (path: string) => (id ? `${path}/${id}` : path)
 
   return (
-    <nav className="mt-6 space-y-1 border-white border-1 flex-4/12">
-        <NavItem icon="home" label="Overview" active route={withId("/homepage")}/>
+    <nav className="mt-6 space-y-1 flex-4/12">
+        <NavItem icon="home" label="Overview" route={withId("/homepage")}/>
         <NavItem icon="orders" label="Orders" route={withId("/orders")} />
         <NavItem icon="products" label="Products" route={withId("/products")}/>
         <NavItem icon="analytics" label="Analytics" route={withId("/analytics")}/>
