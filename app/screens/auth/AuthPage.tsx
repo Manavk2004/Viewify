@@ -21,6 +21,7 @@ import { email, z } from "zod"
 import { router } from "better-auth/api";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useSendEmail } from "@/hooks/sendEmail";
 
 
 
@@ -73,6 +74,8 @@ export default function AuthPage() {
   const router = useRouter()
 
 
+  const sendEmail = useSendEmail()
+
 
   const form = useForm<LoginForm>({
     resolver: zodResolver(emailPasswordSchema),
@@ -88,9 +91,6 @@ export default function AuthPage() {
     setPending(true);
     setError(null);
     try {
-      // No custom logic here — delegate to Better Auth.
-      // If the installed Better Auth client API differs, we surface the error.
-      // @ts-expect-error better-auth client method is runtime-provided
       await authClient.signIn.social({ provider: "google" });
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to start Google sign in");
@@ -118,6 +118,10 @@ export default function AuthPage() {
           onSuccess: async () => { 
             const { data, error } = await authClient.getSession()
             const userId = data?.user?.id
+            sendEmail.mutate({
+              to: "mjkamdar04@gmail.com",
+              firstName: "Manav"
+            })
             router.push(`/homepage/${userId}`)
           }, 
           onError: (err) => console.log("err", err)
