@@ -12,6 +12,18 @@ enum theStatus {
   Draft
 }
 
+enum OrderStatus {
+  Paid
+  Pending
+  Refunded
+}
+
+enum OrderChannel {
+  OnlineStore
+  Draft
+  POS
+}
+
 model Products {
   id             Int       @id @default(autoincrement())
   title          String
@@ -29,6 +41,24 @@ model Products {
   userId         String?
 }
 
+model Order {
+  id           Int          @id @default(autoincrement())
+  orderNumber  String
+  customerName String
+  totalCents   Int
+  status       OrderStatus
+  channel      OrderChannel
+  orderedAt    DateTime
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("order")
+}
+
 model User {
   id            String     @id
   name          String
@@ -40,6 +70,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   products      Products[]
+  orders        Order[]
 
   @@unique([email])
   @@map("user")
