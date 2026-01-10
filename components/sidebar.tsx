@@ -1,6 +1,6 @@
 "use client"
 import { ChartNoAxesCombined, Folders, House, PackageSearch, Search, Settings } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 
 function Icon({ name, className }: { name: string; className?: string }) {
@@ -81,13 +81,21 @@ function NavItem({
 
 
 const SideBar = () => {
+  const params = useParams<{ id?: string }>()
+  const id = params?.id
+
+  // Keep the userId segment in every sidebar link.
+  // If for some reason we're not on a route that includes [id], fall back
+  // to the old non-dynamic routes.
+  const withId = (path: string) => (id ? `${path}/${id}` : path)
+
   return (
     <nav className="mt-6 space-y-1 border-white border-1 flex-4/12">
-        <NavItem icon="home" label="Overview" active route="/homepage"/>
-        <NavItem icon="orders" label="Orders" route='/orders' />
-        <NavItem icon="products" label="Products" route='/products'/>
-        <NavItem icon="analytics" label="Analytics" route='analytics'/>
-        <NavItem icon="settings" label="Settings" route='settings' />
+        <NavItem icon="home" label="Overview" active route={withId("/homepage")}/>
+        <NavItem icon="orders" label="Orders" route={withId("/orders")} />
+        <NavItem icon="products" label="Products" route={withId("/products")}/>
+        <NavItem icon="analytics" label="Analytics" route={withId("/analytics")}/>
+        <NavItem icon="settings" label="Settings" route={withId("/settings")} />
     </nav>
   )
 }

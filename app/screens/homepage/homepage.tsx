@@ -3,6 +3,7 @@ import SideBar from '@/components/sidebar';
 import { Search } from 'lucide-react';
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
+import { useAppQueryState } from '@/lib/nuqs';
 
 type KPI = {
   label: string;
@@ -60,6 +61,9 @@ function StatusPill({ status }: { status: OrderRow["status"] }) {
 export default function Homepage() {
 
   const router = useRouter()
+
+  // nuqs demo: keep the top search field in sync with the URL (?q=...)
+  const [q, setQ] = useAppQueryState("q")
 
   async function onSignOut() {
     await authClient.signOut()
@@ -175,6 +179,8 @@ export default function Homepage() {
                   className="w-full bg-transparent outline-none placeholder:text-zinc-500"
                   placeholder="Search orders, products, customers…"
                   aria-label="Search"
+                  value={q}
+                  onChange={(e) => setQ(e.target.value || null)}
                 />
                 <kbd className="hidden rounded-lg border border-zinc-200 bg-zinc-50 px-2 py-1 text-xs text-zinc-600 sm:inline-block">
                   ⌘K
