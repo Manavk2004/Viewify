@@ -1,6 +1,6 @@
 "use client"
 import { ChartNoAxesCombined, Folders, House, PackageSearch, Search, Settings } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 
 
 function Icon({ name, className }: { name: string; className?: string }) {
@@ -52,8 +52,9 @@ function NavItem({
 }) {
 
   const router = useRouter()
-  console.log("Current active",)
-  const params = useParams()
+
+  const pathname = usePathname()
+  console.log("The pathname", pathname.includes(label.toLowerCase()))
   
 
   return (
@@ -61,7 +62,7 @@ function NavItem({
       onClick={() => {router.push(route); active=true}}
       className={
         "group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors w-full " +
-        (active
+        (pathname.includes(label.toLowerCase())
           ? "bg-muted/70 text-foreground"
           : "text-muted-foreground hover:bg-muted/60 hover:text-foreground")
       }
@@ -94,7 +95,7 @@ const SideBar = () => {
 
   return (
     <nav className="mt-6 space-y-1 flex-4/12">
-        <NavItem icon="home" label="Overview" route={withId("/homepage")}/>
+        <NavItem icon="home" label="Overview" route={withId("/overview")}/>
         <NavItem icon="orders" label="Orders" route={withId("/orders")} />
         <NavItem icon="products" label="Products" route={withId("/products")}/>
         <NavItem icon="analytics" label="Analytics" route={withId("/analytics")}/>
